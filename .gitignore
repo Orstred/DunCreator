@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Mm]emoryCaptures/
+/DungeonAmbient/[Ll]ibrary/
+/DungeonAmbient/[Tt]emp/
+/DungeonAmbient/[Oo]bj/
+/DungeonAmbient/[Bb]uild/
+/DungeonAmbient/[Bb]uilds/
+/DungeonAmbient/[Ll]ogs/
+/DungeonAmbient/[Mm]emoryCaptures/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
