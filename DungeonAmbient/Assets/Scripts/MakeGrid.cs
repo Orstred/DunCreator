@@ -7,50 +7,46 @@ public class MakeGrid : MonoBehaviour
 {
 
     [SerializeField] private Transform[] grid;
+
+    [Min(1)]
     [SerializeField] private int Width;
 
 
     [Button]
     public void updateGrid()
     {
-        if (Width <= 0) { Width = 1; }
+        grid = GetComponentsInChildren<Transform>();
 
-        getGridEllements();
+        turnEllementsIntoGridBlocks();
 
-        TurnEllementsIntoGridBlocks();
-
-        makeGrid();
+        organizeGrid();
 
         setGridBlocksNeighbours();
     }
 
-    public void getGridEllements()
-    {
-      grid = GetComponentsInChildren<Transform>();
-    }
 
-    public void TurnEllementsIntoGridBlocks()
+    public void turnEllementsIntoGridBlocks()
     {
         foreach (Transform t in grid)
         {
             t.tag = "Ground";
 
-            if (t.GetComponent<GridBlock>() == null)
+            if (t.GetComponent<GroundBlock>() == null)
             {
-                    t.gameObject.AddComponent<GridBlock>();
+               t.gameObject.AddComponent<GroundBlock>();
             }
         }
     }
 
     public void setGridBlocksNeighbours()
     {
-        GridBlock[] blocks = GetComponentsInChildren<GridBlock>();
+        GroundBlock[] blocks = GetComponentsInChildren<GroundBlock>();
 
-        int i = 0;
 
-        foreach (GridBlock block in blocks)
+        foreach (GroundBlock block in blocks)
         {
-            foreach (GridBlock t in blocks)
+
+            foreach (GroundBlock t in blocks)
             {
              if (t.transform.position == block.transform.position + Vector3.forward)
                 {
@@ -70,60 +66,31 @@ public class MakeGrid : MonoBehaviour
                 }
             }
 
-            //block.blockAbove = getUpperNeghbour(i);
-            //block.blockBelow = getLowerNeghbour(i);
-            //block.blockLeft  = getLeftNeighbour(i);
-            //block.blockRight = getRightNeighbour(i);
-            //i++;
+            block.setNeighbours();
         }
 
-
-        GridBlock getUpperNeghbour(int currentblock = 0) 
-        {
-            if (currentblock + Width > grid.Length - 1)
-                return null;
-
-            return grid[currentblock + Width].GetComponent<GridBlock>();
-        }
-        GridBlock getLowerNeghbour(int currentblock = 0) 
-        {
-            if (currentblock - Width < 0 || grid[currentblock - Width] == null)
-                return null;
-
-            return grid[currentblock - Width].GetComponent<GridBlock>();
-        }
-        GridBlock getLeftNeighbour(int currentblock = 0) 
-        {
-            return null;
-        }
-        GridBlock getRightNeighbour(int currentblock = 0) 
-        {
-            return null;
-        }
-
-        GridBlock findOnGridByPos(Vector3 pos)
-        {
-            foreach (GridBlock block in blocks)
-            {
-                if(block.transform.position == pos)
-                    return block;
-            }
-            return null;
-        }
+   
     }
     
-    public void makeGrid(int startofrow = 1, int row = 0)
+    public void organizeGrid(int startofrow = 1, int row = 0)
     {
         for (int i = 0; i < Width; i++)
         {
-            if (i + startofrow > grid.Length - 1) return;
+            if (i + startofrow > grid.Length - 1)
+            {
+                return;
+            }
 
             Transform currenttile = grid[i + startofrow];
 
-            currenttile.position = new Vector3(i, 0, row);
+            currenttile.localPosition = new Vector3(i, 0, row);
         }
 
-        makeGrid(startofrow: startofrow + Width, row: row + 1);
+        organizeGrid(startofrow: startofrow + Width, row: row + 1);
     }
    
+    public GroundBlock[] getGridEllements()
+    {
+        return GetComponentsInChildren<GroundBlock>();
+    }
 }
