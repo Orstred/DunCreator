@@ -70,8 +70,6 @@ public class MainGrid : MonoBehaviour
                     block.LeftNeighbour = t;
                 }
             }
-
-            block.setNeighbours();
         }
 
    
