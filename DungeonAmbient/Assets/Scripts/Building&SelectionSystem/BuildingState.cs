@@ -38,7 +38,7 @@ public class BuildingState : SBstate
 
                 if (!isThereSomethingAbove(emptylotpos))
                 {
-                    MachineManager.currentSelection.OnBuild(pos: emptylotpos);
+                    MachineManager.currentSelection.OnBuild(pos: emptylotpos, emptylot);
                 }
             }
             

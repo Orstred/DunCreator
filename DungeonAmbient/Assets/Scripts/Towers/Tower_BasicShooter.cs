@@ -12,7 +12,9 @@ public class Tower_BasicShooter : Base_PlayerTower
 
     [SerializeField] private float fireRate = 1;
 
+
     private float rate;
+
 
     private void OnEnable()
     {
@@ -37,7 +39,7 @@ public class Tower_BasicShooter : Base_PlayerTower
         {
             _head = transform;
         }
-        rate = fireRate;
+        lot.Weight += PathfindingHandler.BASEWEIGHT;
     }
 
     private void LateUpdate()
@@ -58,6 +60,10 @@ public class Tower_BasicShooter : Base_PlayerTower
         }
     }
 
+    private void OnDestroy()
+    {
+        lot.Weight -= PathfindingHandler.BASEWEIGHT;
+    }
 }
 
 public class Tower_Trigger : MonoBehaviour
@@ -69,11 +75,9 @@ public class Tower_Trigger : MonoBehaviour
         parenttower = GetComponentInParent<Base_PlayerTower>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Base_Enemy>() != null)
-        {
-            parenttower.currentTarget = other.GetComponent<Base_Enemy>();
-        }
+        if(parenttower.currentTarget == null)
+       parenttower.currentTarget = other.GetComponent<Base_Enemy>();
     }
 }   

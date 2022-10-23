@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GroundBlock : MonoBehaviour, IselectableBuilding
 {
 
     // Grid system
-    protected GroundBlock[] Neighhbours = new GroundBlock[4];
+    public GroundBlock[] Neighhbours = new GroundBlock[4];
 
     public GroundBlock UpperNeighbour;
     public GroundBlock LowerNeighbour;
@@ -13,17 +14,20 @@ public class GroundBlock : MonoBehaviour, IselectableBuilding
 
     public void setNeighbours()
     {
-        Neighhbours = new GroundBlock[4];
+        List<GroundBlock> neighbours = new List<GroundBlock>();
 
-        Neighhbours[0] = UpperNeighbour;
-        Neighhbours[1] = LowerNeighbour;
-        Neighhbours[2] = LeftNeighbour;
-        Neighhbours[3] = RightNeighbour;
+        if (UpperNeighbour != null)
+            neighbours.Add(UpperNeighbour);
+        if (LowerNeighbour != null)
+            neighbours.Add(LowerNeighbour);
+        if (LeftNeighbour != null)
+            neighbours.Add(LeftNeighbour);
+        if (RightNeighbour != null)
+            neighbours.Add(RightNeighbour);
+
+        Neighhbours = neighbours.ToArray();
     }
-    public GroundBlock[] getNeighbours()
-    {
-        return Neighhbours;
-    }
+
 
 
     //Pathfinding
@@ -39,8 +43,6 @@ public class GroundBlock : MonoBehaviour, IselectableBuilding
     {
         GetComponent<Renderer>().material.color = Color.white;
     }
-    public void OnBuild(Vector3 pos)
-    {
+    public void OnBuild(Vector3 pos, GroundBlock emptylot) { }
 
-    }
 }

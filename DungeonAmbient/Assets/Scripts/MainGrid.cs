@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class MakeGrid : MonoBehaviour
+public class MainGrid : MonoBehaviour
 {
 
     [SerializeField] private Transform[] grid;
@@ -46,21 +46,26 @@ public class MakeGrid : MonoBehaviour
         foreach (GroundBlock block in blocks)
         {
 
+            block.UpperNeighbour = null;
+            block.LowerNeighbour = null;
+            block.LeftNeighbour = null;
+            block.RightNeighbour = null;
+
             foreach (GroundBlock t in blocks)
             {
-             if (t.transform.position == block.transform.position + Vector3.forward)
+             if (t.transform.localPosition == block.transform.localPosition + Vector3.forward)
                 {
                     block.UpperNeighbour = t;
                 }
-             if (t.transform.position == block.transform.position + Vector3.back)
+             if (t.transform.localPosition == block.transform.localPosition + Vector3.back)
                 {
                     block.LowerNeighbour = t;
                 }
-             if (t.transform.position == block.transform.position + Vector3.right)
+             if (t.transform.localPosition == block.transform.localPosition + Vector3.right)
                 {
                     block.RightNeighbour = t;
                 }
-             if (t.transform.position == block.transform.position + Vector3.left)
+             if (t.transform.localPosition == block.transform.localPosition + Vector3.left)
                 {
                     block.LeftNeighbour = t;
                 }

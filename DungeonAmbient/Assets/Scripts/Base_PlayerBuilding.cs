@@ -3,6 +3,9 @@ using UnityEngine;
 
 public abstract class Base_PlayerBuilding : MonoBehaviour, IselectableBuilding
 {
+
+    public GroundBlock lot;
+
     public void OnSelect()
     {
         return;
@@ -11,8 +14,9 @@ public abstract class Base_PlayerBuilding : MonoBehaviour, IselectableBuilding
     {
         return; 
     }
-    public virtual void OnBuild(Vector3 pos)
+    public virtual void OnBuild(Vector3 pos, GroundBlock emptylot)
     {
         Instantiate(gameObject, pos, Quaternion.identity);
+        lot = emptylot;
     }
 }

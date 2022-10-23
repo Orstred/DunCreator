@@ -7,8 +7,9 @@ public class BasicBullet : MonoBehaviour, IBullet
 
     [SerializeField] private float Speed = 1.0f;
     [SerializeField] private int Damage = 10;
-    [SerializeField] private float StayTime = 5f, rate = 5f;
+    [SerializeField] private float StayTime = 5f;
 
+    private float rate = 5f;
     private Transform _transform;
 
     private void Start()
@@ -30,7 +31,7 @@ public class BasicBullet : MonoBehaviour, IBullet
 
     void LateUpdate()
     {
-        MoveForward();
+       MoveForward();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,12 +40,16 @@ public class BasicBullet : MonoBehaviour, IBullet
         {
             return;
         }
+        if(other.gameObject.layer == LayerMask.NameToLayer("IgnoreRaycast"))
+        {
+            return;
+        }
         onHitTarget(other.gameObject);
     }
 
     public void MoveForward()
     {
-        _transform.position += _transform.forward * Speed * Time.deltaTime;
+       _transform.position += _transform.forward * Time.deltaTime * Speed;
     }
 
     public void onHitTarget(GameObject collision)
@@ -52,8 +57,7 @@ public class BasicBullet : MonoBehaviour, IBullet
         if(collision.GetComponent<Base_Enemy>() != null)
         {
             collision.GetComponent<IHealth>().UpdateHealth(-Damage);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 }
